@@ -9,11 +9,28 @@ $conn = new mysqli($servername, $username, $password, $dbname);
 $sql = "SELECT * FROM characters";
 $result = $conn->query($sql);
 
-if (empty($_GET["id"])) {
+$limitask = "SELECT COUNT(id) AS truelimit FROM characters";
+$limitresult = $conn->query($limitask);
+if($limitresult->num_rows > 0){
+    while($limitrow = $limitresult->fetch_assoc()) {
+        $limit = $limitrow['truelimit'];
+}
+}
+
+function customError(){
+    $selection = "placeholder";
+}
+set_error_handler(customError());
+
+if (empty($_GET["id"]) or !is_numeric($_GET["id"]) or ($_GET["id"] > $limit) or ($_GET["id"] < 0)) {
     $selection = "placeholder";
 } else {
     $selection = $_GET['id'];
+    stripslashes($selection);
+    trim($selection);
+    htmlspecialchars($selection);
 }
+//prepared statements
   $truevalue = "SELECT name, color, avatar, bio from characters WHERE id = $selection";
   $trueresult = $conn->query($truevalue);
 
@@ -39,13 +56,14 @@ if (empty($_GET["id"])) {
 <!DOCTYPE html>
 <html>
     <head>
+        <title>Budokai Tenkaichi 3</title>
         <link rel="stylesheet" href="/BT3-Dynamic-Page/stylesheet.css">
     </head>
         <body style=" background-color: <?php echo $bgcolor ?>">
             <a href="/BT3-Dynamic-Page/ThePage.php">Return</a>
             <div class="middle">
                 <h1 class="nametext"><?php echo $selecttext ?></h1>
-                <img class="avatar" src="/BT3-Dynamic-Page/sprites/<?php echo $showimage ?>">
+                <img class="avatar" src="/BT3-Dynamic-Page/sprites/<?php echo $showimage ?>" alt="Player Selection">
                 <p class="biotext"><?php echo $biotext ?></p>
                 <?php include "watermark.php" ?>
             </div>

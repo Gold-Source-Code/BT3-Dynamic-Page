@@ -44,16 +44,6 @@ $allresult = $conn->query($all);
       }
     ?>
       </ul>
-    
-
-
-        <br>
-        <div class="InputField">
-          <form method="post" action="/BT3-Dynamic-Page/TheSecondPage.php">
-          <label for="selection">Character:</label><br>
-          <input type="text" id="selection" name="selection"><br>
-          <input type="submit">
-          </form>
           <?php include "watermark.php" ?>
         </div>
     </body>

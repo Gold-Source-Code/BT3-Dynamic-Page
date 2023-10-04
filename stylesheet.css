@@ -1,10 +1,4 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@500&display=swap');
-.InputField {
-    text-align: center;
-    font-size: 54px;
-    font-family: Roboto;
-}
-
 .nametext {
     margin-top: 25px;
     text-align: center;
